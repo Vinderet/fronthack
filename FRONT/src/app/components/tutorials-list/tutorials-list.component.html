@@ -1,0 +1,17 @@
+<div class="tutorials-list">
+    <h2>All Tutorials</h2>
+    <ul>
+      <li *ngFor="let tutorial of tutorials">
+        <a [routerLink]="['/tutorial', tutorial.id]">
+          {{ tutorial.title }} (Published: {{ tutorial.published ? 'Yes' : 'No' }})
+        </a>
+      </li>
+    </ul>
+  
+    <h2>Published Tutorials</h2>
+    <ul>
+      <li *ngFor="let tutorial of publishedTutorials">
+        {{ tutorial.title }} - {{ tutorial.description }}
+      </li>
+    </ul>
+  </div>
