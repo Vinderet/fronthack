@@ -1,13 +1,7 @@
-from rest_framework import serializers
-from tutorials.models import Tutorial
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-
-
-class TutorialSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tutorial
-        fields = ("id", "title", "description", "published")
+from rest_framework import serializers
+from .models import Income, Expense, Category
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -40,3 +34,23 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+
+class IncomeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Income
+        fields = ["id", "amount", "description", "date", "created_at"]
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "name"]
+
+
+class ExpenseSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)  # Для вывода категории как объекта
+
+    class Meta:
+        model = Expense
+        fields = ["id", "amount", "description", "date", "category", "created_at"]
